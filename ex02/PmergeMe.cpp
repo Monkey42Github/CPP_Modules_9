@@ -40,9 +40,9 @@ bool IsOnlyValidNumber(char **av)
     return true;
 }
 
-std::vector<std::vector<int>> init_vector(char **av)
+std::vector<std::vector<int> > init_vector(char **av)
 {
-    std::vector<std::vector<int>> v;
+    std::vector<std::vector<int> > v;
     int i = 1;
 
     if (!IsOnlyValidNumber(av))
@@ -102,9 +102,8 @@ void PmergeMe(char **av)
 {
     try
     {
-        std::vector<std::vector<int>> v = init_vector(av);
+        std::vector<std::vector<int> > v = init_vector(av);
 
-        auto startTime = std::chrono::high_resolution_clock::now();
         while (v.size() != 1)
         {
             std::vector<int> l1 = v[0];
@@ -116,15 +115,16 @@ void PmergeMe(char **av)
         }
         std::vector<int> lFinal = v[0];
 
+        std::clock_t startClock = std::clock();
         std::cout << "After:  ";
         for (std::vector<int>::iterator i = lFinal.begin(); i != lFinal.end(); ++i)
             std::cout << *i << " ";
         std::cout << std::endl;
 
-        auto endTime = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> duration = endTime - startTime;
+        std::clock_t endClock = std::clock();
+        double microseconds = (endClock - startClock) / (double)CLOCKS_PER_SEC * 1000000;
 
-        std::cout << "Time to process a range of " << v[0].size() << " elements: " <<  duration.count()*1000000 << " us" << std::endl;
+        std::cout << "Time to process a range of " << v[0].size() << " elements: " <<  microseconds << " us" << std::endl;
     }
     catch (const std::exception &e)
     {
